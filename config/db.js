@@ -26,7 +26,7 @@ const sequelizePostgres = new Sequelize(process.env.URL_RENDER_POSTGRES || 'post
 
 // Query SQL para verificar se o banco de dados "dc" já existe
 const checkDatabaseQuery = `
-      SELECT datname FROM pg_database WHERE datname = 'dc';
+      SELECT datname FROM pg_database WHERE datname = '${process.env.DB || 'dc'}';
     `;
 
 try {
@@ -35,10 +35,10 @@ try {
 
     if (result.length === 0) {
         // O banco de dados "dc" não existe, então podemos criá-lo
-        await sequelizePostgres.query('CREATE DATABASE dc;');
+        await sequelizePostgres.query(`CREATE DATABASE ${process.env.DB || 'dc'};`);
     } else {
         // O banco de dados "dc" já existe
-        console.log('Banco de dados "dc" já existe.');
+        console.log(`Banco de dados ${process.env.DB || 'dc'} já existe.`);
     }
 } catch (error) {
     console.error('Erro:', error);
