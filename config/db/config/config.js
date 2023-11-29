@@ -1,10 +1,12 @@
+import 'dotenv/config'
+
 export const DB_CONFIG = {
-    HOST: "localhost",
-    PORT: 5432,
-    USER: "postgres",
-    PASSWORD: "postgres",
-    DB: 'dc',
-    dialect: "postgres",
+    HOST: process.env.HOST || "localhost",
+    PORT: process.env.PORT || 5432,
+    USER: process.env.USER || "postgres",
+    PASSWORD: process.env.PASSWORD || "postgres",
+    DB: process.env.DB || 'dc',
+    dialect: process.env.DIALECT || "postgres",
     pool: {
         max: 5, //maximum number of connection in pool
         min: 0, //minimum number of connection in pool

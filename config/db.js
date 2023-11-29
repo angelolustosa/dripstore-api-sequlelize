@@ -14,8 +14,14 @@ import 'dotenv/config' //https://www.npmjs.com/package/dotenv#how-do-i-use-doten
 }); */
 
 // Agora, você pode conectar diretamente ao banco de dados "dc"
-const sequelizePostgres = new Sequelize('postgres://postgres:postgres@localhost:5432/postgres', {
+const sequelizePostgres = new Sequelize(process.env.URL_RENDER_POSTGRES || 'postgres://postgres:postgres@localhost:5432/postgres', {
     dialect: 'postgres',
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false, // Configuração para evitar o erro "SSL/TLS required"
+        },
+    },
 });
 
 // Query SQL para verificar se o banco de dados "dc" já existe
@@ -50,6 +56,12 @@ export const sequelize = new Sequelize(DB_CONFIG.DB, DB_CONFIG.USER, DB_CONFIG.P
     {
         host: process.env.DB_HOST || DB_CONFIG.HOST,
         dialect: process.env.DB_HOST || DB_CONFIG.dialect,
+        dialectOptions: {
+            ssl: {
+                require: true,
+                rejectUnauthorized: false, // Configuração para evitar o erro "SSL/TLS required"
+            },
+        },
         port: process.env.PORT || DB_CONFIG.PORT,
         pool: { ...DB_CONFIG.pool },
         /*  pool: {
