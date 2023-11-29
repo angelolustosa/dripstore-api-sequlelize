@@ -1,10 +1,10 @@
 export const DB_CONFIG = {
     HOST: "localhost",
-    PORT: 3306,
-    USER: "root",
-    PASSWORD: "root",
-    DB: 'api',
-    dialect: "mysql",
+    PORT: 5432,
+    USER: "postgres",
+    PASSWORD: "postgres",
+    DB: 'dc',
+    dialect: "postgres",
     pool: {
         max: 5, //maximum number of connection in pool
         min: 0, //minimum number of connection in pool

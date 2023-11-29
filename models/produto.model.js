@@ -5,9 +5,16 @@ export const produtoModel = (sequelize, Sequelize) => {
     nome: {
       type: Sequelize.STRING
     },
-    categoria: {
+    /* idCategoria: {
+      type: Sequelize.INTEGER,
+      references: {
+        model: 'categoria',
+        key: 'id'
+      }
+    }, */
+    /* categoria: {
       type: Sequelize.STRING
-    },
+    }, */
     descricao: {
       type: Sequelize.STRING
     },
@@ -27,11 +34,11 @@ export const produtoModel = (sequelize, Sequelize) => {
     }
   });
 
-  /*  sequelize.sync().then(() => {
-     console.log('[INFO-MODEL] Produto table created successfully!');
-   }).catch((error) => {
-     console.error('[ERROR] Unable to create table : ', error);
-   }); */
+  /* sequelize.sync().then(() => {
+    console.log('[INFO-MODEL] Produto table created successfully!');
+  }).catch((error) => {
+    console.error('[ERROR] Unable to create table : ', error);
+  }); */
 
   return Produto;
 };

@@ -2,6 +2,7 @@ import express from "express"
 import cors from "express"
 import { routerProduto } from "./routes/produto.routes.js";
 import db from "./models/index.js";
+import { routerCategoria } from "./routes/categoria.routes.js";
 
 
 const app = express();
@@ -18,7 +19,8 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-db.sequelize.sync({ force: true })
+
+db.sequelize.sync(/* { force: true } */)
     .then(() => {
         console.log("Drop and re-sync db.");
     })
@@ -32,6 +34,7 @@ app.get("/", (req, res) => {
 });
 
 routerProduto(app);
+routerCategoria(app);
 
 // set port, listen for requests
 const HOST = process.env.HOST || 'localhost';

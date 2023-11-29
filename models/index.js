@@ -1,19 +1,8 @@
-import Sequelize from 'sequelize'
+import Sequelize, { DataTypes } from 'sequelize'
 import { DB_CONFIG } from '../config/db/config/config.js';
 import { produtoModel } from './produto.model.js';
-
-
-const sequelize = new Sequelize(DB_CONFIG.DB, DB_CONFIG.USER, DB_CONFIG.PASSWORD, {
-    host: DB_CONFIG.HOST,
-    dialect: DB_CONFIG.dialect,
-    //operatorsAliases: false,
-    pool: {
-        max: DB_CONFIG.pool.max,
-        min: DB_CONFIG.pool.min,
-        acquire: DB_CONFIG.pool.acquire,
-        idle: DB_CONFIG.pool.idle
-    }
-});
+import { sequelize } from '../config/db.js';
+import { categoriaModel } from './categoria.model.js';
 
 sequelize.authenticate().then(() => {
     console.log('[INFO] Connection has been established successfully.');
@@ -26,6 +15,23 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.produto = produtoModel(sequelize, Sequelize);
+const Produto = produtoModel(sequelize, Sequelize);
+const Categoria = categoriaModel(sequelize, Sequelize);
+
+db.produto = Produto
+db.categoria = Categoria
+
+// Produto.belongsTo(Categoria, { foreignKey: 'id_categoria', as: 'categoria' });
+// Categoria.hasMany(Produto, { foreignKey: 'id_categoria', as: 'produto' });
+
+// Corrige a associação para especificar explicitamente o nome da coluna
+Produto.belongsTo(Categoria, {
+    foreignKey: 'categoriaId', // nome correto da coluna
+    as: 'categoria',
+  });
+  
+  Categoria.hasOne(Produto, {
+    foreignKey: 'categoriaId', // nome correto da coluna
+  });
 
 export default db

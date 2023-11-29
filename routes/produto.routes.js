@@ -11,7 +11,7 @@ export const routerProduto = app => {
     router.get("/", produtoController.findAll);
 
     // Retrieve all published Tutorials
-    router.get("/:status", produtoController.findAllPublished);
+    router.get("/status/:status", produtoController.findAllPublished);
 
     // Retrieve a single Tutorial with id
     router.get("/:id", produtoController.findOne);
