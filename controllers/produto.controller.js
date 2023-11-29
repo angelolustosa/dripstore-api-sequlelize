@@ -117,7 +117,7 @@ export const produtoController = {
                         err.message || "Some error occurred while retrieving Produtos."
                 });
             });
-    }
+    },
     // Update a Produto by the id in the request
     update: async (req, res) => {
         try {
