@@ -3,15 +3,15 @@ import cors from "express"
 import { routerProduto } from "./routes/produto.routes.js";
 import db from "./models/index.js";
 import { routerCategoria } from "./routes/categoria.routes.js";
-
+import os from "os";
 
 const app = express();
 
-var corsOptions = {
+/* var corsOptions = {
     origin: "http://localhost:5173"
-};
+}; */
 
-app.use(cors(corsOptions));
+//app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
 app.use(express.json());
@@ -37,8 +37,9 @@ routerProduto(app);
 routerCategoria(app);
 
 // set port, listen for requests
-const HOST = process.env.HOST || 'localhost';
+//const HOST = 'localhost';
 const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => {
-    console.log(`Server is running on http://${HOST}:${PORT}.`);
+    console.log(`Server is running on http://${os.hostname()}:${PORT}.`);
 });
