@@ -3,7 +3,7 @@ import cors from "express"
 import { routerProduto } from "./routes/produto.routes.js";
 import db from "./models/index.js";
 import { routerCategoria } from "./routes/categoria.routes.js";
-import os from "os";
+
 
 const app = express();
 
@@ -37,9 +37,9 @@ routerProduto(app);
 routerCategoria(app);
 
 // set port, listen for requests
-//const HOST = 'localhost';
-const PORT = process.env.PORT || 5000;
+const HOST = 'localhost';
+const PORT = 5000;
 
 app.listen(PORT, () => {
-    console.log(`Server is running on http://${os.hostname()}:${PORT}.`);
+    console.log(`Server is running on http://${HOST}:${PORT}.`);
 });
