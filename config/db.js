@@ -52,17 +52,18 @@ try {
 // sequelizePostgres.options.database = 'dc';  // Altera a configuração do banco de dados para "dc"
 // export const sequelize = new Sequelize(sequelizePostgres.options);
 
-export const sequelize = new Sequelize(DB_CONFIG.DB, DB_CONFIG.USER, DB_CONFIG.PASSWORD,
+export const sequelize = new Sequelize(
+    process.env.DB, process.env.USER, process.env.PASSWORD,
     {
-        host: process.env.DB_HOST || DB_CONFIG.HOST,
-        dialect: process.env.DB_HOST || DB_CONFIG.dialect,
+        host: process.env.DB_HOST,
+        dialect: process.env.DB_HOST,
         dialectOptions: {
             ssl: {
                 require: true,
                 rejectUnauthorized: false, // Configuração para evitar o erro "SSL/TLS required"
             },
         },
-        port: process.env.PORT || DB_CONFIG.PORT,
+        port: process.env.PORT,
         pool: { ...DB_CONFIG.pool },
         /*  pool: {
              max: DB_CONFIG.pool.max,
