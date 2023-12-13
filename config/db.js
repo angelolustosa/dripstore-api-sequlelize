@@ -56,7 +56,7 @@ export const sequelize = new Sequelize(
     DB_CONFIG.DB, DB_CONFIG.USER, DB_CONFIG.PASSWORD,
     {
         host: DB_CONFIG.HOST,
-        dialect: 'postgres',
+        dialect: DB_CONFIG.dialect,
         dialectOptions: {
             ssl: {
                 require: true,
@@ -67,6 +67,8 @@ export const sequelize = new Sequelize(
         pool: { ...DB_CONFIG.pool },
     }
 );
+
+console.log(`DB_CONFIG`, JSON.stringify(DB_CONFIG));
 
 sequelize.authenticate().then(() => {
     console.log('[INFO] Connection has been established successfully.');
