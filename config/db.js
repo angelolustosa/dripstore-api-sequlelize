@@ -11,7 +11,9 @@ const sequelizePostgres = new Sequelize(process.env.URL_RENDER_POSTGRES || 'post
             require: true,
             rejectUnauthorized: false, // Configuração para evitar o erro "SSL/TLS required"
         },
+        keepAlive: true,
     },
+    ssl: true,
 });
 
 // Query SQL para verificar se o banco de dados "dc" já existe
@@ -38,13 +40,15 @@ export const sequelize = new Sequelize(DB_CONFIG.DB, DB_CONFIG.USER, DB_CONFIG.P
     {
         host: DB_CONFIG.HOST,
         dialect: DB_CONFIG.dialect,
+        port: DB_CONFIG.PORT,
         dialectOptions: {
             ssl: {
                 require: true,
                 rejectUnauthorized: false, // Configuração para evitar o erro "SSL/TLS required"
             },
+            keepAlive: true,
         },
-        port: DB_CONFIG.PORT,
+        ssl: true,
         pool: { ...DB_CONFIG.pool },
         //logging: false
     }
