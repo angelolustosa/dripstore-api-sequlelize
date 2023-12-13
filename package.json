@@ -5,7 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon --trace-deprecation -r dotenv/config server.js",
+    "start": "nodemon -r dotenv/config server.js --trace-deprecation ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
