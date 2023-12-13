@@ -53,25 +53,18 @@ try {
 // export const sequelize = new Sequelize(sequelizePostgres.options);
 
 export const sequelize = new Sequelize(
-    process.env.DB, process.env.USER, process.env.PASSWORD,
+    DB_CONFIG.DB, DB_CONFIG.USER, DB_CONFIG.PASSWORD,
     {
-        host: process.env.DB_HOST,
-        dialect: process.env.DB_HOST,
+        host: DB_CONFIG.HOST,
+        dialect: 'postgres',
         dialectOptions: {
             ssl: {
                 require: true,
                 rejectUnauthorized: false, // Configuração para evitar o erro "SSL/TLS required"
             },
         },
-        port: process.env.PORT,
+        port: 5432,
         pool: { ...DB_CONFIG.pool },
-        /*  pool: {
-             max: DB_CONFIG.pool.max,
-             min: DB_CONFIG.pool.min,
-             acquire: DB_CONFIG.pool.acquire,
-             idle: DB_CONFIG.pool.idle
-         }, */
-        //logging: false
     }
 );
 
