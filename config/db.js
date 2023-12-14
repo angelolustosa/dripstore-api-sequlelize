@@ -3,9 +3,11 @@ import { Sequelize } from 'sequelize';
 import { DB_CONFIG } from './db/config/config.js';
 import 'dotenv/config' //https://www.npmjs.com/package/dotenv#how-do-i-use-dotenv-with-import
 
+let URL_RENDER_POSTGRES = `${DB_CONFIG.DIALECT}://${DB_CONFIG.USER}:${DB_CONFIG.PASS}@${DB_CONFIG.HOST}:${DB_CONFIG.PORT}/postgres`
+
+console.log('URL_RENDER_POSTGRES', URL_RENDER_POSTGRES, 'postgres://postgres:postgres@localhost:5432/postgres');
 // Agora, você pode conectar diretamente ao banco de dados "dc"
-const sequelizePostgres = new Sequelize(process.env.URL_RENDER_POSTGRES || 'postgres://postgres:postgres@localhost:5432/postgres', {
-    dialect: 'postgres',
+const sequelizePostgres = new Sequelize(URL_RENDER_POSTGRES, {
     dialectOptions: {
         ssl: {
             require: true,
@@ -16,9 +18,15 @@ const sequelizePostgres = new Sequelize(process.env.URL_RENDER_POSTGRES || 'post
     ssl: true,
 });
 
+sequelizePostgres.authenticate().then(() => {
+    console.log('[INFO] Connection POSTGRES has been established successfully.',);
+}).catch((error) => {
+    console.error('[ERROR] Unable to connect to the database: ', error);
+});
+
 // Query SQL para verificar se o banco de dados "dc" já existe
 const checkDatabaseQuery = `
-      SELECT datname FROM pg_database WHERE datname = '${process.env.DB || 'dc'}';
+      SELECT datname FROM pg_database WHERE datname = '${DB_CONFIG.DB || 'dc'}';
     `;
 
 try {
@@ -27,34 +35,39 @@ try {
 
     if (result.length === 0) {
         // O banco de dados "dc" não existe, então podemos criá-lo
-        await sequelizePostgres.query(`CREATE DATABASE ${process.env.DB || 'dc'};`);
+        await sequelizePostgres.query(`CREATE DATABASE ${db.DB || 'dc'};`);
     } else {
         // O banco de dados "dc" já existe
-        console.log(`Banco de dados ${process.env.DB || 'dc'} já existe.`);
+        console.log(`Banco de dados ${DB_CONFIG.DB || 'dc'} já existe.`);
     }
+
+    sequelizePostgres.close()
+    console.log('[INFO] Connection POSTGRES closed!',);
 } catch (error) {
     console.error('Erro:', error);
 }
 
-export const sequelize = new Sequelize(DB_CONFIG.DB, DB_CONFIG.USER, DB_CONFIG.PASSWORD,
-    {
-        host: DB_CONFIG.HOST,
-        dialect: DB_CONFIG.dialect,
-        port: DB_CONFIG.PORT,
-        pool: { ...DB_CONFIG.pool },
-        dialectOptions: {
-            ssl: {
-                require: true,
-                rejectUnauthorized: false, // Configuração para evitar o erro "SSL/TLS required"
-            },
-            keepAlive: true,
+let URL_RENDER_DC = `${DB_CONFIG.DIALECT}://${DB_CONFIG.USER}:${DB_CONFIG.PASS}@${DB_CONFIG.HOST}:${DB_CONFIG.PORT}/${DB_CONFIG.DB}`
+
+
+export const sequelize = new Sequelize(URL_RENDER_DC, {
+    pool: { ...DB_CONFIG.pool },
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false, // Configuração para evitar o erro "SSL/TLS required"
         },
-        ssl: true,
-    }
+        keepAlive: true,
+    },
+    ssl: true,
+}
 );
 
+console.log('URL_RENDER_POSTGRES', URL_RENDER_POSTGRES, 'postgres://postgres:postgres@localhost:5432/postgres');
+
+
 sequelize.authenticate().then(() => {
-    console.log('[INFO] Connection has been established successfully.');
+    console.log('[INFO] Connection DC has been established successfully.',);
 }).catch((error) => {
     console.error('[ERROR] Unable to connect to the database: ', error);
 });

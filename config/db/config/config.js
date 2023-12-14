@@ -1,12 +1,12 @@
 import 'dotenv/config'
 
 export const DB_CONFIG = {
-    HOST: process.env.HOST || "localhost",
-    PORT: process.env.PORT || 5432,
-    USER: process.env.USER || "postgres",
-    PASSWORD: process.env.PASSWORD || "postgres",
-    DB: process.env.DB || 'dc',
-    dialect: process.env.DIALECT || "postgres",
+    HOST: 'dpg-clj9jrtae00c7384q3ag-a.oregon-postgres.render.com', //process.env.HOST || "localhost",
+    PORT: 5432,
+    USER: 'admin', //process.env.USER || "postgres",
+    PASS: 'Zayvmmoma5yhpPThZHkRhnOEmWj3FqOd', // process.env.PASSWORD || "postgres",
+    DB: 'dc',
+    DIALECT: 'postgres',
     pool: {
         max: 5, //maximum number of connection in pool
         min: 0, //minimum number of connection in pool
