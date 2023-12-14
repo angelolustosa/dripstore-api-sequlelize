@@ -41,6 +41,7 @@ export const sequelize = new Sequelize(DB_CONFIG.DB, DB_CONFIG.USER, DB_CONFIG.P
         host: DB_CONFIG.HOST,
         dialect: DB_CONFIG.dialect,
         port: DB_CONFIG.PORT,
+        pool: { ...DB_CONFIG.pool },
         dialectOptions: {
             ssl: {
                 require: true,
@@ -49,8 +50,6 @@ export const sequelize = new Sequelize(DB_CONFIG.DB, DB_CONFIG.USER, DB_CONFIG.P
             keepAlive: true,
         },
         ssl: true,
-        pool: { ...DB_CONFIG.pool },
-        //logging: false
     }
 );
 
