@@ -1,7 +1,6 @@
 // config/config.js
 import { Sequelize } from 'sequelize';
 import { DB_CONFIG } from './db/config/config.js';
-import 'dotenv/config' //https://www.npmjs.com/package/dotenv#how-do-i-use-dotenv-with-import
 
 let URL_RENDER_POSTGRES = `${DB_CONFIG.DIALECT}://${DB_CONFIG.USER}:${DB_CONFIG.PASS}@${DB_CONFIG.HOST}:${DB_CONFIG.PORT}/postgres`
 
@@ -64,7 +63,6 @@ export const sequelize = new Sequelize(URL_RENDER_DC, {
 );
 
 console.log('URL_RENDER_POSTGRES', URL_RENDER_POSTGRES, 'postgres://postgres:postgres@localhost:5432/postgres');
-
 
 sequelize.authenticate().then(() => {
     console.log('[INFO] Connection DC has been established successfully.',);
