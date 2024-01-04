@@ -1,5 +1,5 @@
 import express from "express"
-import cors from "express"
+import cors from "cors"
 import { routerProduto } from "./routes/produto.routes.js";
 import db from "./models/index.js";
 import { routerCategoria } from "./routes/categoria.routes.js";
@@ -11,7 +11,7 @@ const app = express();
     origin: "http://localhost:5173"
 }; */
 
-//app.use(cors(corsOptions));
+app.use(cors());
 
 // parse requests of content-type - application/json
 app.use(express.json());
